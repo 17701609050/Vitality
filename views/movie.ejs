@@ -1,0 +1,95 @@
+<%- include(
+    'components/header', {
+    title: '',
+    description: '',
+    keyword: '',
+
+    })
+%>
+<link href="/stylesheets/pagination.css" rel="stylesheet">
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="movieList">
+                <nav class="navbar" role="navigation" id="navibar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/movies" class="currentmovietype">最新</a></li>
+                        <li><a href="/movies/douban" class="currentmovietype">豆瓣高分</a></li>
+                        <li><a href="{% url 'movie_list_imdb' %}" class="currentmovietype">IMDB高分</a></li>
+                    </ul>
+                </nav>
+                <div>
+                <ul class="movieList_tab">
+                    <!--选项卡切换之最新-->
+                    <li class="current">
+                        <div class="movieList_con row">
+                            <% movies.data.forEach(function(movie){ %>
+                                <div class="col-md-4">
+                                    <div class="thumbnail movieList_con_cell_info">
+                                        <div class="post-thumbnail">
+                                            <a href="/movie/subject/<%= movie._id %>/" class="inimg" target="_blank" title="<%= movie.chinese_movie_name %>">
+                                                <img src="<%= movie.imgs[0] %>" alt="<%= movie.chinese_movie_name %>"/>
+                                            </a>
+                                        </div>
+                                        <a href="/movie/subject/<%= movie._id %>/"><%= movie.movie %></a>
+                                    </div>
+                                    <!--  -->
+                                </div>
+                            <% }); %>
+                        </div>
+                    </li>
+                </ul>
+                </div>
+            </div>
+            <div id="pages"></div>
+        </div>
+
+        <div class="col-md-3">
+            <!--AD-->
+            <div class="sidebar-block">
+                <h3 class="catListTitle"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;广告</h3>
+                <div style="text-align: center">
+                <a target="_blank" href="https://s.click.taobao.com/t?e=m%3D2%26s%3DnkjZtVRtPoccQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAocJNa4OyAN2jiRkxbhwQNzWePgha7T0wH9EPFfAXnEZv92usfM45oXWSw9%2FuI4tg5OrPSpwgNex52fUFuCXFljFSHLx7GXNykAUQdVyQjtv3eyuD8v94PeR5QSegoQsOVZh60yJlmBX5LHo6sqpqDKSXMV4ozPsJz8Zo%2FjHDXX%2BLNmFwzcjFAU%3D">
+                    <img style="height: 100%;width: 100%;" src="/images/aliyun_463x224.jpg">
+                </a>
+                </div>
+            </div>
+            <!--AD-->
+            
+            <%- include('components/statement', {})%>
+            <div class="sidebar-block">
+                <h3 class="catListTitle"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;关注我们</h3>
+                <div>
+                    <%- include('components/footer', {})%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="total" value="<%= movies.total %>" />
+<input type="hidden" id="currentPage" value="<%= currentPage %>" />
+<input type="hidden" id="pageSize" value="<%= pageSize %>" />
+<input type="hidden" id="q" value="<%= q %>" />
+<script src="/javascripts/pagination.js"></script>
+<script>
+    new Pagination({
+        element: '#pages', // 渲染的容器  [必填]
+        type: 1, // 样式类型，默认1 ，目前可选 [1,2] 可自行增加样式   [非必填]
+        layout: 'total, sizes, home, prev, pager, next, last, jumper', // [必填]
+        pageIndex: $("#currentPage").val(), // 当前页码 [非必填]
+        pageSize: $("#pageSize").val(), // 每页显示条数   TODO: 默认选中sizes [非必填]
+        pageCount: 9, // 页码显示数量，页码必须大于等于5的奇数，默认页码9  TODO:为了样式美观，参数只能为奇数， 否则会报错 [非必填]
+        total: $("#total").val(), // 数据总条数 [必填]
+        singlePageHide: false, // 单页隐藏， 默认true  如果为true页码少于一页则不会渲染 [非必填]
+        pageSizes: [12, 24, 36, 48], // 选择每页条数  TODO: layout的sizes属性存在才生效
+        prevText: '上一页', // 上一页文字，不传默认为箭头图标  [非必填]
+        nextText: '下一页', // 下一页文字，不传默认为箭头图标 [非必填]
+        ellipsis: true, // 页码显示省略符 默认false  [非必填]
+        disabled: true, // 显示禁用手势 默认false  [非必填]
+        currentChange: function(index, pageSize) { // 页码改变时回调  TODO:第一个参数是当前页码，第二个参数是每页显示条数数量，需使用sizes第二参数才有值。
+            // console.log(index, pageSize);
+            location.href = '/movies?page='+index+'&limit='+pageSize+'&q='+$("#q").val();
+        }
+    });
+</script>
+

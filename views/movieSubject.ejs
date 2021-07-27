@@ -1,0 +1,100 @@
+<%- include(
+    'components/header', {
+    title: '',
+    description: '',
+    keyword: '',
+
+    })
+%>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <!-- <div class="col-lg-12 col-md-10 col-md-offset-1 col-sm-12 remove_padding"> -->
+                <div id="content">
+                    <h4><%= movie.moviename %></h4>
+                    <h4><%= movie.chinese_movie_name %></h4>
+                    <h5 class="blog_info">
+                        <%= movie.dateyear %>&nbsp;&nbsp;<span class="play"></span>阅读量: <%= movie.doubancounter  %>
+                    </h5>
+                    <div class="bdsharebuttonbox">
+                        <a href="#" class="bds_more" data-cmd="more">分享到：</a>
+                        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+                        <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+                        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+                        <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友">QQ好友</a>
+                    </div>
+                    <script>
+                        window._bd_share_config={
+                            "common":{
+                                "bdSnsKey":{},
+                                "bdText":"分享 文章 「 <%= movie.chinese_movie_name %> 」 ",
+                                "bdMini":"2",
+                                "bdMiniList":false,
+                                "bdPic":"",
+                                "bdStyle":"1",
+                                "bdSize":"16"
+                            },
+                            "share":{"bdSize":16}};
+                        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='' +
+                            'https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                    </script>
+    
+                    <h5 class="tag">
+                        <span class="glyphicon glyphicon-tags" ></span>&nbsp;
+                        <a href="" class="tag_link"><%= movie.style %></a>&nbsp;&nbsp;
+                    </h5>
+                    <div>
+                        <img width="600px" src="<%= movie.imgs[0] %>">
+                    </div>
+                    <br/>
+    
+                    <p><span class="">电影名：<%= movie.chinese_movie_name %></span></p>&nbsp;&nbsp;
+                    <p><span class="">电影译名：<%= movie.translation_name %></span></p>&nbsp;&nbsp;
+                    <p><span class="">电影年份：<%= movie.dateyear %></span></p>&nbsp;&nbsp;
+                    <p><span class="">电影产地：<%= movie.country %></span></p>&nbsp;&nbsp;
+                    <p><span class="">电影语言：<%= movie.language %></span></p>&nbsp;&nbsp;
+                    <p><span class="">电影时长：<%= movie.movie_length %></span></p>&nbsp;&nbsp;
+                    <p><span class="">豆瓣评分：<%= movie.doubanscore %></span></p>&nbsp;&nbsp;
+                    <p><span class="">IMDB评分：<%= movie.imdbscore %></span></p>&nbsp;&nbsp;
+                    <p><span class="">导演：<%= movie.director %></span></p>&nbsp;&nbsp;
+                    <p><span class="">演员表：<%= movie.actor %></span></p>&nbsp;&nbsp;
+                    <p><span class="">电影类型：<%= movie.style %></span></p>&nbsp;&nbsp;
+                    <p><span class="">电影简介：</span></p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <%= movie.aboutmovie %>
+                    <!-- <p><img src="/media/{{ movie.movie_detail_pic }}"></p> -->
+                    <br/>
+                    <br/>
+                    <p><span class="">迅雷下载地址：
+                        <!-- {% if movie.downloadlink %} -->
+                            <a href="<%= movie.downloadlink %>"><i class="glyphicon glyphicon-download-alt" aria-hidden="true"></i></a>
+                        <!-- {% else %}
+                            暂不支持下载
+                        {% endif %} -->
+                    </span></p>&nbsp;&nbsp;
+    
+                </div>
+            <!-- </div> -->
+        </div>
+
+        <div class="col-md-4">
+            <!--AD-->
+            <div class="sidebar-block">
+                <h3 class="catListTitle"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;广告</h3>
+                <div style="text-align: center">
+                <a target="_blank" href="https://s.click.taobao.com/t?e=m%3D2%26s%3DnkjZtVRtPoccQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAocJNa4OyAN2jiRkxbhwQNzWePgha7T0wH9EPFfAXnEZv92usfM45oXWSw9%2FuI4tg5OrPSpwgNex52fUFuCXFljFSHLx7GXNykAUQdVyQjtv3eyuD8v94PeR5QSegoQsOVZh60yJlmBX5LHo6sqpqDKSXMV4ozPsJz8Zo%2FjHDXX%2BLNmFwzcjFAU%3D">
+                    <img style="height: 100%;width: 100%;" src="/images/aliyun_463x224.jpg">
+                </a>
+                </div>
+            </div>
+            <!--AD-->
+            
+            <%- include('components/statement', {})%>
+            <div class="sidebar-block">
+                <h3 class="catListTitle"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;关注我们</h3>
+                <div>
+                    <%- include('components/footer', {})%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
