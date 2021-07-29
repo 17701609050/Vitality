@@ -10,12 +10,15 @@ import store from './vuex'
 import {sync} from 'vuex-router-sync'
 import 'iview/dist/styles/iview.css'
 import './assets/style/admin.css'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(iView)
+Vue.use(mavonEditor)
 
 // 路由配置
 const RouterConfig = {

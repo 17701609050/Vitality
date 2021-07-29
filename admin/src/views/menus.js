@@ -15,13 +15,18 @@ const menus = [
     {
         name: "电影",
         path: "set",
-        icon: "ios-cog",
+        icon: "ios-film",
         children: [
             {
-                icon: "md-contacts",
+                icon: "md-film",
                 name: "电影列表",
                 path: "/movie"
-            }
+            },
+            {
+                name: "电影创建",
+                path: "/movie/create",
+                icon: "md-add-circle"
+              }
         ]
     },
 
