@@ -63,6 +63,7 @@ import {mapActions} from 'vuex';
 export default {
     data () {
         return {
+            id: this.$route.params.id,
             formValidate: {
                 chinese_movie_name: '',
                 moviename: '',
@@ -76,7 +77,7 @@ export default {
                 style: '',
                 language: '',
                 aboutmovie: '',
-                imdbscore: '',
+                imdbscore: ''
             },
             ruleValidate: {
                 chinese_movie_name: [
@@ -92,29 +93,55 @@ export default {
             }
         }
     },
+    created() {
+      this._getMovie();
+    },
     methods: {
       ...mapActions({
-        createMovie: 'movie/creatMovie',
-        // getCategoryList: 'category/getCategoryList'
+        getMovie: 'movie/getMovie',
+        updateMovie: 'movie/updateMovie',
       }),
       // 创建
-      async _createMovie() {
-        this.formValidate.id = this.id;
-
+      async _getMovie() {
         try {
-          const movie = await this.createMovie(this.formValidate);
-          console.log(movie);
-          this.$Message.success('新增成功!');
-          // this.$router.push('/movies');
+          const res = await this.getMovie({id: this.id});
+          const obj = res.data;
+
+          this.formValidate.chinese_movie_name = obj.chinese_movie_name;
+          this.formValidate.moviename = obj.moviename;
+          this.formValidate.imgs = obj.imgs[0];
+          this.formValidate.translation_name = obj.translation_name;
+          this.formValidate.doubanscore = obj.doubanscore;
+          this.formValidate.dateyear = obj.dateyear;
+          this.formValidate.director = obj.director;
+          this.formValidate.actor = obj.actor;
+          this.formValidate.country = obj.country;
+          this.formValidate.style = obj.style;
+          this.formValidate.language = obj.language;
+          this.formValidate.aboutmovie = obj.aboutmovie;
 
         } catch (e) {
+            console.log('获取电影详情失败')
+        }
+      },
+      // 更新
+      async _updateMovie() {
+        this.formValidate.id = this.id;
+        const movie = await this.updateMovie(this.formValidate);
+        console.log(movie);
+        console.log(movie.data.status)
 
+        if(movie.data.status==400){
+            this.$Message.error('更新失败!');
+        }else{
+            this.$Message.success('更新成功!');
+            this.$router.push('/movie');
         }
       },
       handleSubmit (name) {
           this.$refs[name].validate((valid) => {
               if (valid) {
-                this._createMovie();
+                this._updateMovie();;
               } else {
                   this.$Message.error('提交失败，填写有误!');
               }

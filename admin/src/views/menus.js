@@ -30,23 +30,23 @@ const menus = [
         ]
     },
 
-    {
-        name: "分类管理",
-        path: "category",
-        icon: "md-move",
-        children: [
-            {
-                name: "分类列表",
-                path: "/category",
-                icon: "md-list"
-            },
-            {
-                name: "分类创建",
-                path: "/category/create",
-                icon: "md-add-circle"
-            }
-        ]
-    },
+    // {
+    //     name: "分类管理",
+    //     path: "category",
+    //     icon: "md-move",
+    //     children: [
+    //         {
+    //             name: "分类列表",
+    //             path: "/category",
+    //             icon: "md-list"
+    //         },
+    //         {
+    //             name: "分类创建",
+    //             path: "/category/create",
+    //             icon: "md-add-circle"
+    //         }
+    //     ]
+    // },
 
     {
         name: "文章管理",

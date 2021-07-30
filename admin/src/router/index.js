@@ -25,6 +25,12 @@ const routers = [
         name: 'movie/create',
         meta: {module: "/movie/create", group: "movie", title: '添加电影'},
         component: (resolve) => require(['../views/movie/CreateMovie.vue'], resolve),
+      },
+      {
+        path: 'movie/update/:id',
+        name: 'movie/update',
+        meta: {module: "/movie", group: "movie", title: '更新电影'},
+        component: (resolve) => require(['../views/movie/UpdateMovie.vue'], resolve),
       }
     ]
   }

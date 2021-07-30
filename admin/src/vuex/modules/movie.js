@@ -9,23 +9,23 @@ const actions = {
     return movie.list(params);
   },
 
-  // 获取文章详情
-  async getArticle({state, commit}, params) {
+  // 获取电影详情
+  async getMovie({state, commit}, params) {
     return movie.detail(params);
   },
 
-  // 创建文章
-  async createArticle({state, commit}, params) {
+  // 创建电影
+  async creatMovie({state, commit}, params) {
     return movie.create(params);
   },
 
   // 更新文章
-  async updateArticle({state, commit}, params) {
+  async updateMovie({state, commit}, params) {
     return movie.update(params);
   },
 
   // 删除文章
-  async destroyArticle({state, commit}, id) {
+  async destroytMovie({state, commit}, id) {
     return movie.destroy(id);
   }
 };

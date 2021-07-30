@@ -1,6 +1,6 @@
 <template>
   <section>
-    <Button type="primary" @click="toPathLink('/article/create')" icon="md-add" style="margin-bottom: 16px;">新增电影
+    <Button type="primary" @click="toPathLink('/movie/create')" icon="md-add" style="margin-bottom: 16px;">新增电影
     </Button>
     <section v-if="list.length > 0">
       <Table :loading="loading" border :columns="columns" :data="list">
@@ -8,14 +8,14 @@
           <strong>{{ row.name }}</strong>
         </template>
         <template slot-scope="{ row }" slot="action">
-          <Button type="primary" size="small" style="margin-right: 5px" @click="update(row.id)">编辑</Button>
+          <Button type="primary" size="small" style="margin-right: 5px" @click="update(row._id)">编辑</Button>
           <Button type="error" size="small" @click="destroy(row.id)">删除</Button>
         </template>
       </Table>
 
       <section class="page">
         <Page :total="page.total"
-              :page-size="page.per_page"
+              :page-size="12"
               :current="page.current_page"
               show-total
               @on-change="handlePage"></Page>
@@ -190,6 +190,7 @@
       },
       // 切换分页
       handlePage(page) {
+        // 替换路由里的查询参数
         this.$router.replace({
           query: merge(this.$route.query, {
             page
@@ -200,7 +201,7 @@
       },
       // 更新
       update(id) {
-        this.$router.push(`/article/update/${id}`);
+        this.$router.push(`/movie/update/${id}`);
       },
       // 路由跳转
       toPathLink(path) {

@@ -23,6 +23,18 @@ router.get('/movie/:mid/', async function(req, res, next) {
   res.send(movie);
 });
 
+//create movie
+router.post('/movie', async function(req, res, next) {
+  const movie = await Movie.createMovie(req.body);
+  res.send(movie);
+});
+
+//put movie
+router.put('/movie/:id', async function(req, res, next) {
+  const movie = await Movie.updateMovie(req.body, req.params);
+  res.send(movie);
+});
+
 
 
 /* add article. */

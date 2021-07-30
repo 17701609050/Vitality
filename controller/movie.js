@@ -50,7 +50,53 @@ class Movie {
 		}
         
     };
-    
+    async createMovie(data){
+        try{
+            // 检测是否存在文章
+            const hasMovie = await MovieModel.findOne({
+                where: {
+                    moviename: data.moviename
+                }   
+            });
+        
+            // 如果存在，抛出存在信息
+            if (hasMovie) {
+                throw new global.errs.Existing('电影已存在');
+            }
+			const movie = MovieModel.create(data);
+            return movie;
+		}catch(err){
+            console.log(err);
+            const movie = {};
+            movie['status'] = 400;
+            movie['err'] = '创建失败';
+            return movie;
+		}
+    };
+    async updateMovie(data, params){
+        try{
+            // 检测是否存在
+            const movie = await MovieModel.findOne({_id: mongoose.Types.ObjectId(params.id)});
+            // 如果不存在，抛出异常
+            if (!movie) {
+                throw new global.errs.Existing('电影不存在');
+            }
+            movie.updateOne(data, function(err, res) {
+                // Updated at most one doc, `res.modifiedCount` contains the number
+                // of docs that MongoDB updated
+                if(res.modifiedCount){
+                    return movie;
+                }
+            });
+            
+		}catch(err){
+            console.log(err);
+            const movie = {};
+            movie['status'] = 400;
+            movie['err'] = '更新失败';
+            return movie;
+		}
+    } 
     
 }
 

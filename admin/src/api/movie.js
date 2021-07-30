@@ -2,32 +2,32 @@
 import fetch from './fetch';
 
 export default {
-  // 获取文章列表
+  // 获取列表
   list(params) {
     return fetch.get('/movies', params)
   },
-  // 获取文章详情
+  // 获取详情
   detail(params) {
     const {id} = params;
     delete params.id;
 
-    return fetch.get('/article/' + id, params);
+    return fetch.get('/movie/' + id, params);
   },
 
-  // 更新文章
+  // 更新
   update(params) {
     const {id} = params;
     delete params.id;
-    return fetch.put('/article/' + id, params)
+    return fetch.put('/movie/' + id, params)
   },
 
   // 删除文章
   destroy(id) {
-    return fetch.delete('/article/' + id)
+    return fetch.delete('/movie/' + id)
   },
 
-  // 创建文章
+  // 创建电影
   create(params) {
-    return fetch.post('/article', params);
+    return fetch.post('/movie', params);
   }
 }
