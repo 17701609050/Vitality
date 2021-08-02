@@ -96,7 +96,11 @@ class Movie {
             movie['err'] = '更新失败';
             return movie;
 		}
-    } 
+    };
+    async destroy(params){
+        const res = await MovieModel.deleteOne({_id: mongoose.Types.ObjectId(params.id)});
+        return res;
+    }
     
 }
 

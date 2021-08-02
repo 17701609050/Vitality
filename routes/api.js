@@ -35,6 +35,12 @@ router.put('/movie/:id', async function(req, res, next) {
   res.send(movie);
 });
 
+//delete movie
+router.delete('/movie/:id', async function(req, res, next) {
+  const result = await Movie.destroy(req.params);
+  res.send(result);
+});
+
 
 
 /* add article. */

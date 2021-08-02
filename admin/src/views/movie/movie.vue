@@ -9,7 +9,7 @@
         </template>
         <template slot-scope="{ row }" slot="action">
           <Button type="primary" size="small" style="margin-right: 5px" @click="update(row._id)">编辑</Button>
-          <Button type="error" size="small" @click="destroy(row.id)">删除</Button>
+          <Button type="error" size="small" @click="destroy(row._id)">删除</Button>
         </template>
       </Table>
 
@@ -175,7 +175,7 @@
     methods: {
       ...mapActions({
         getArticleList: 'movie/getMovieList',
-        destroyArticle: 'article/destroyArticle'
+        destroyMovie: 'movie/destroyMovie'
       }),
       // 获取文章
       async fetchData() {
@@ -215,7 +215,7 @@
           loading: true,
           onOk: async () => {
             try {
-              await this.destroyArticle(id);
+              await this.destroyMovie(id);
               this.$Message.success('删除成功');
 
               this.fetchData();

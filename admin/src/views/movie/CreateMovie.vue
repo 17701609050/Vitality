@@ -105,7 +105,7 @@ export default {
           const movie = await this.createMovie(this.formValidate);
           console.log(movie);
           this.$Message.success('新增成功!');
-          // this.$router.push('/movies');
+          this.$router.push('/movies');
 
         } catch (e) {
 

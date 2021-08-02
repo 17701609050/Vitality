@@ -25,7 +25,7 @@ const actions = {
   },
 
   // 删除文章
-  async destroytMovie({state, commit}, id) {
+  async destroyMovie({state, commit}, id) {
     return movie.destroy(id);
   }
 };
