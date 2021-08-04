@@ -10,5 +10,9 @@
 	    "secure": false,
 	    "maxAge": 3652460601000
 		}
+	},
+	"security": {
+		"secretKey": "secretKey",
+		"expiresIn": 3600
 	}
 }

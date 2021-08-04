@@ -1,3 +1,6 @@
+import jwt from 'jsonwebtoken'
+import config from '../config/config.js'
+
 class Utils {
     parseQueryOptions(query) {
         const DEFAULT_LIMIT = 12;
@@ -23,6 +26,17 @@ class Utils {
             }
         }
         return options;
+    }
+    generateToken(uid, scope) {
+        const secretKey = config.security.secretKey;
+        const expiresIn = config.security.expiresIn;
+        const token = jwt.sign({
+            uid,
+            scope
+        }, secretKey, {
+            expiresIn: expiresIn
+        })
+        return token
     }
 }
 export default new Utils()

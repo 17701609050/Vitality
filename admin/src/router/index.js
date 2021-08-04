@@ -1,6 +1,14 @@
 /* eslint-disable */
 const routers = [
   {
+    path: '/login',
+    meta: {
+      title: "登录",
+      noAuth: true
+    },
+    component: (resolve) => require(['../views/login.vue'], resolve),
+  },
+  {
     path: '/',
     component(resolve) {
       require(['../views/layout.vue'], resolve)

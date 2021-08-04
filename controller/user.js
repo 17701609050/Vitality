@@ -1,49 +1,104 @@
 'use strict';
 
-// import "babel-polyfill";
+import bcrypt from 'bcryptjs'
+import basicAuth from 'basic-auth'
 import UserModel from '../models/user'
+import util from './utils'
+import config from '../config/config.js'
 import formidable from 'formidable'
 
-class Category {
-    async addUser(req, res, next){
+class User {
+    async register(req, res, next){
+		const data = req.body;
 		
-        const form = new formidable.IncomingForm();
-        form.parse(req, async (err, fields, files) => {
-            
-            if (!fields.name) {
-                res.send({
-					status: 0,
-					message: '必须填写名称',
-				});
-            };
-            // const date = new Date();
-            const userObj = {
-                name: fields.name,
-                email: fields.email,
-                password: fields.password,
-                date_joined: Date.now(),
-                intruduce: fields.intruduce,
-                
-            }
-            const newUser = new UserModel(userObj);  
-            try{
-				await newUser.save();
+		//生成salt的迭代次数
+		const saltRounds = 10;
+		//随机生成salt
+		const salt = bcrypt.genSaltSync(saltRounds);
+		//获取hash值
+		var hash = bcrypt.hashSync(data.password, salt);
+		const userObj = {
+			name: data.name,
+			email: data.email,
+			password: hash,
+			intruduce: data.intruduce,
+			
+		}
+		try{
+			const newUser = await UserModel.create(userObj);
+			console.log(newUser);
+			if(newUser){
 				res.send({
 					status: 1,
 					success: '添加成功',
 				})
-			}catch(err){
-				console.log('保存数据失败');
+			}
+			
+		}catch(err){
+			console.log(err);
+			res.send({
+				status: 0,
+				type: 'ERROR_IN_SAVE_DATA',
+				message: '保存数据失败 '+ err,
+			})
+		}    
+	};
+	async login(req, res, next){
+		const data = req.body;
+		const admin = await UserModel.findOne({name: data.username})
+		if (!admin) {
+			res.send({
+				status: 0,
+				type: 'ERROR_IN_AUTH_DATA',
+				message: '账号不存在 ',
+			});
+		}else{
+			const correct = bcrypt.compareSync(req.body.password, admin.password);
+			if (!correct) {
 				res.send({
 					status: 0,
-					type: 'ERROR_IN_SAVE_DATA',
-					message: '保存数据失败 '+ err,
+					type: 'ERROR_IN_AUTH_DATA',
+					message: '密码不正确 ',
+				})
+			}else{
+				const token = util.generateToken(admin.id, 16)
+				res.send({
+					status: 1,
+					token: token
 				})
 			}
-            
-        })
-		
+		}
 	};
+	async auth(req, res, next){
+		const Credentials = basicAuth(req);
+		let errMsg = "无效的token";
+		// 无带token
+		if (!Credentials || !Credentials.name) {
+			errMsg = "需要携带token值";
+		}else{
+			try {
+				var decode = jwt.verify(Credentials.name, config.security.secretKey);
+	
+			} catch (error) {
+				// token 不合法 过期
+				if (error.name === 'TokenExpiredError') {
+				errMsg = "token已过期"
+				}
+			}
+		}
+		if (errMsg){
+			res.send({
+				status: 0,
+				error: errMsg
+			})
+		}else{
+			res.send({
+				uid: 0,
+				scope: decode.scope
+			})
+		}
+		
+	}
     async getUser(req, res, next){
         try{
 			const users = await UserModel.find({}, '-_id');
@@ -73,4 +128,4 @@ class Category {
 	// 	}
 	// }
 }
-export default new Category()
+export default new User()

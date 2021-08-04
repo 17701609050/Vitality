@@ -174,13 +174,13 @@
     },
     methods: {
       ...mapActions({
-        getArticleList: 'movie/getMovieList',
+        getMovieList: 'movie/getMovieList',
         destroyMovie: 'movie/destroyMovie'
       }),
       // 获取文章
       async fetchData() {
         // let {page, desc, category_id, keyword} = this.$route.query;
-        const res = await this.getArticleList({
+        const res = await this.getMovieList({
           page: this.currentPage
         });
         console.log(res)
@@ -211,7 +211,7 @@
       destroy(id) {
         this.$Modal.confirm({
           title: '提示',
-          content: '<p>确定删除此文章吗？</p>',
+          content: '<p>确定删除吗？</p>',
           loading: true,
           onOk: async () => {
             try {

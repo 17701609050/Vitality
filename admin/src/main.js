@@ -1,11 +1,14 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+/* eslint-disable */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import App from './App'
 import Routers from './router'
+import Util from './libs/util'
 import iView from 'iview'
+import VueLocalStorage from 'vue-ls'
 import store from './vuex'
 import {sync} from 'vuex-router-sync'
 import 'iview/dist/styles/iview.css'
@@ -19,6 +22,10 @@ Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(iView)
 Vue.use(mavonEditor)
+
+Vue.use(VueLocalStorage, {
+  namespace: 'Vitatity-'
+});
 
 // 路由配置
 const RouterConfig = {
@@ -34,8 +41,43 @@ const RouterConfig = {
 }
 
 const router = new VueRouter(RouterConfig)
+
+
+router.beforeEach(async (to, from, next) => {
+  iView.LoadingBar.start();
+  Util.title(to.meta.title)
+
+  console.log(Vue.ls)
+  
+  if (!!to.meta.noAuth) {
+    // 不需要认证的页面直接跳过
+    next()
+  }else{
+    const token = Vue.ls.get("token");
+    if (token) {
+      store.dispatch('admin/auth').then(() => {
+        next()
+  
+      }).catch(err => {
+        Vue.prototype.$Message.error(err.data.msg || '权限未授权')
+        setTimeout(() => {
+          next('/login')
+        }, 1500);
+      })
+  
+    }else {
+        Vue.prototype.$Message.error('权限未授权')
+        setTimeout(() => {
+          next('/login')
+        }, 1500)
+      
+    }
+  }
+  
+})
+
 sync(store, router)
-/* eslint-disable no-new */
+
 new Vue({
   el: '#app',
   router: router,

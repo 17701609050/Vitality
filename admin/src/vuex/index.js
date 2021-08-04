@@ -8,6 +8,7 @@ import * as types from './mutation-types'
 // import reply from './modules/reply'
 import article from './modules/article'
 import movie from './modules/movie'
+import admin from './modules/admin'
 // import advertise from './modules/advertise'
 
 Vue.use(Vuex);
@@ -54,5 +55,6 @@ export default new Vuex.Store({
   modules: {
     article,
     movie,
+    admin
   }
 });

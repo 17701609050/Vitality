@@ -7,13 +7,11 @@ import {Base64} from 'js-base64'
 import * as types from '../vuex/mutation-types'
 
 Util.ajax.defaults.headers.common = {
-  // 'X-Requested-With': 'XMLHttpRequest',
-  // 'Content-Type': 'application/json; charset=utf-8'
-  
+  'X-Requested-With': 'XMLHttpRequest',
 }
 
 Util.ajax.interceptors.request.use(config => {
-  // config.headers['Authorization'] = _encode();
+  config.headers['Authorization'] = _encode();
   return config
 
 }, error => {
