@@ -39,11 +39,11 @@
             <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu"
                   size="24"></Icon>
             <div style="float: right;margin-right: 20px" >
-              <div style="float: right;margin-right: 20px" v-if="adminAuth">
+              <div style="float: right;margin-right: 20px" v-if="userInfo">
               <Dropdown transfer trigger="hover" @on-click="exitAccount">
                 <a href="javascript:void(0)">
                   <Avatar size="small" style="background-color: #2d8cf0" icon="ios-person" />
-                  <span class="main-user-name">zipinglx</span>
+                  <span class="main-user-name">{{userInfo.name}}</span>
                   <Icon type="ios-arrow-down"/>
                 </a>
                 <DropdownMenu slot="list">
@@ -97,7 +97,7 @@
     },
     computed: {
       ...mapState({
-        adminAuth: state => state.admin.adminAuth,
+        userInfo: state => state.admin.userInfo,
         // mainLoading: state => state.main_loading,
         // pictureModal: state => state.picture_modal,
       }),

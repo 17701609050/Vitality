@@ -2,10 +2,13 @@
 
 import bcrypt from 'bcryptjs'
 import basicAuth from 'basic-auth'
+import jwt from 'jsonwebtoken'
+import datetime from 'silly-datetime'
 import UserModel from '../models/user'
 import util from './utils'
 import config from '../config/config.js'
 import formidable from 'formidable'
+import moment from 'moment';
 
 class User {
     async register(req, res, next){
@@ -61,6 +64,8 @@ class User {
 					message: '密码不正确 ',
 				})
 			}else{
+				admin.last_login = datetime.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
+				admin.save()
 				const token = util.generateToken(admin.id, 16)
 				res.send({
 					status: 1,
@@ -71,18 +76,17 @@ class User {
 	};
 	async auth(req, res, next){
 		const Credentials = basicAuth(req);
-		let errMsg = "无效的token";
+		let errMsg = "";
 		// 无带token
 		if (!Credentials || !Credentials.name) {
 			errMsg = "需要携带token值";
 		}else{
 			try {
 				var decode = jwt.verify(Credentials.name, config.security.secretKey);
-	
 			} catch (error) {
 				// token 不合法 过期
 				if (error.name === 'TokenExpiredError') {
-				errMsg = "token已过期"
+				errMsg = "token已过期，请重新登录"
 				}
 			}
 		}
@@ -92,10 +96,8 @@ class User {
 				error: errMsg
 			})
 		}else{
-			res.send({
-				uid: 0,
-				scope: decode.scope
-			})
+			const user = await UserModel.findOne({'_id': decode.uid}, {'password': 0});
+			res.send(user);
 		}
 		
 	}

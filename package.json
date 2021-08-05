@@ -24,7 +24,8 @@
     "moment": "^2.29.1",
     "mongoose": "^5.13.2",
     "morgan": "~1.9.1",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "silly-datetime": "^0.1.2"
   },
   "devDependencies": {
     "babel-polyfill": "^6.26.0"

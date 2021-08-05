@@ -46,8 +46,6 @@ const router = new VueRouter(RouterConfig)
 router.beforeEach(async (to, from, next) => {
   iView.LoadingBar.start();
   Util.title(to.meta.title)
-
-  console.log(Vue.ls)
   
   if (!!to.meta.noAuth) {
     // 不需要认证的页面直接跳过
@@ -55,18 +53,23 @@ router.beforeEach(async (to, from, next) => {
   }else{
     const token = Vue.ls.get("token");
     if (token) {
-      store.dispatch('admin/auth').then(() => {
-        next()
+      store.dispatch('admin/auth').then(x => {
+        if(x.data.status==0){
+          Vue.prototype.$Message.error(x.data.error || '未授权')
+        }else if(x.data){
+          next()
+        }
   
       }).catch(err => {
-        Vue.prototype.$Message.error(err.data.msg || '权限未授权')
+        console.log(err)
+        Vue.prototype.$Message.error(err.data.error || '未授权')
         setTimeout(() => {
           next('/login')
         }, 1500);
       })
   
     }else {
-        Vue.prototype.$Message.error('权限未授权')
+        Vue.prototype.$Message.error('未授权')
         setTimeout(() => {
           next('/login')
         }, 1500)
@@ -75,6 +78,10 @@ router.beforeEach(async (to, from, next) => {
   }
   
 })
+router.afterEach(() => {
+  iView.LoadingBar.finish();
+  window.scrollTo(0, 0);
+});
 
 sync(store, router)
 
