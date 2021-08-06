@@ -9,11 +9,11 @@ router.post('/category', Category.addCategory);
 router.get('/category', Category.getCategory);
 
 
-/* add user. */
+/* user manager */
 router.post('/user', User.register);
 router.post('/user/login', User.login);
 router.get('/user/auth', User.auth);
-router.get('/user', User.getUser);
+router.get('/users', User.getUsers);
 
 router.get('/movies', async function(req, res, next) {
   const movies = await Movie.getMovies(req.query);

@@ -41,28 +41,29 @@
     
                     <h5 class="tag">
                         <span class="glyphicon glyphicon-tags" ></span>&nbsp;
-                        <a href="" class="tag_link"><%= movie.style %></a>&nbsp;&nbsp;
+                        <a href="" class="tag_link"><%= movie.style %></a>
                     </h5>
                     <div>
                         <img width="600px" src="<%= movie.imgs[0] %>">
                     </div>
                     <br/>
     
-                    <p><span class="">电影名：<%= movie.chinese_movie_name %></span></p>&nbsp;&nbsp;
-                    <p><span class="">电影译名：<%= movie.translation_name %></span></p>&nbsp;&nbsp;
-                    <p><span class="">电影年份：<%= movie.dateyear %></span></p>&nbsp;&nbsp;
-                    <p><span class="">电影产地：<%= movie.country %></span></p>&nbsp;&nbsp;
-                    <p><span class="">电影语言：<%= movie.language %></span></p>&nbsp;&nbsp;
-                    <p><span class="">电影时长：<%= movie.movie_length %></span></p>&nbsp;&nbsp;
-                    <p><span class="">豆瓣评分：<%= movie.doubanscore %></span></p>&nbsp;&nbsp;
-                    <p><span class="">IMDB评分：<%= movie.imdbscore %></span></p>&nbsp;&nbsp;
-                    <p><span class="">导演：<%= movie.director %></span></p>&nbsp;&nbsp;
-                    <p><span class="">演员表：<%= movie.actor %></span></p>&nbsp;&nbsp;
-                    <p><span class="">电影类型：<%= movie.style %></span></p>&nbsp;&nbsp;
-                    <p><span class="">电影简介：</span></p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <%= movie.aboutmovie %>
+                    <p><span class="">©电影名：<%= movie.chinese_movie_name %></span></p>
+                    <p><span class="">©电影译名：<%= movie.translation_name %></span></p>
+                    <p><span class="">©电影年份：<%= movie.dateyear %></span></p>
+                    <p><span class="">©电影产地：<%= movie.country %></span></p>
+                    <p><span class="">©电影语言：<%= movie.language %></span></p>
+                    <p><span class="">©电影时长：<%= movie.movie_length %></span></p>
+                    <p><span class="">©豆瓣评分：<%= movie.doubanscore %></span></p>
+                    <p><span class="">©IMDB评分：<%= movie.imdbscore %></span></p>
+                    <p><span class="">©导演：<%= movie.director %></span></p>
+                    <p><span class="">©演员表：<%= movie.actor %></span></p>
+                    <p><span class="">©电影类型：<%= movie.style %></span></p>
+                    <p><span class="">©电影简介：</span>
+                        <%= movie.aboutmovie %>
+                    </p>
+                    
                     <!-- <p><img src="/media/{{ movie.movie_detail_pic }}"></p> -->
-                    <br/>
                     <br/>
                     <p><span class="">迅雷下载地址：
                         <!-- {% if movie.downloadlink %} -->
@@ -76,25 +77,39 @@
             <!-- </div> -->
         </div>
 
-        <div class="col-md-4">
-            <!--AD-->
-            <div class="sidebar-block">
-                <h3 class="catListTitle"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;广告</h3>
-                <div style="text-align: center">
-                <a target="_blank" href="https://s.click.taobao.com/t?e=m%3D2%26s%3DnkjZtVRtPoccQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAocJNa4OyAN2jiRkxbhwQNzWePgha7T0wH9EPFfAXnEZv92usfM45oXWSw9%2FuI4tg5OrPSpwgNex52fUFuCXFljFSHLx7GXNykAUQdVyQjtv3eyuD8v94PeR5QSegoQsOVZh60yJlmBX5LHo6sqpqDKSXMV4ozPsJz8Zo%2FjHDXX%2BLNmFwzcjFAU%3D">
-                    <img style="height: 100%;width: 100%;" src="/images/aliyun_463x224.jpg">
-                </a>
+        <div class="col-md-4" style="margin-top: 20px;">
+            <div class="panel panel-default tags">
+                <div class="panel-heading">
+                  <h3 class="panel-title">热门标签</h3>
                 </div>
-            </div>
-            <!--AD-->
+                <div class="panel-body tags-body">
+                    <a href="">剧情</a>
+                    <a href="">犯罪</a>
+                    <a href="">悬疑</a>
+                    <a href="">动作</a>
+                    <a href="">喜剧</a>
+                    <a href="">冒险</a>
+                    <a href="">灾难</a>
+                    <a href="">爱情</a>
+                    <a href="">科幻</a>
+                    <a href="">恐怖</a>
+                    <a href="">惊悚</a>
+                    <a href="">战争</a>
+                    <a href="">奇幻</a>
+                </div>
+            </div>  
+            <!--广告-->
+            <%- include('components/ad', {})%>
             
+            <!--广告-->
+
+            <!--声明-->
             <%- include('components/statement', {})%>
-            <div class="sidebar-block">
-                <h3 class="catListTitle"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;关注我们</h3>
-                <div>
-                    <%- include('components/footer', {})%>
-                </div>
-            </div>
+            <!--声明-->
+
+            <!--关于-->
+            <%- include('components/about', {})%>
+            <!--关于-->
         </div>
     </div>
 </div>

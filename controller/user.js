@@ -25,7 +25,7 @@ class User {
 			email: data.email,
 			password: hash,
 			intruduce: data.intruduce,
-			
+			joined_date: datetime.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
 		}
 		try{
 			const newUser = await UserModel.create(userObj);
@@ -101,12 +101,29 @@ class User {
 		}
 		
 	}
-    async getUser(req, res, next){
+    async getUsers(req, res, next){
+		const query = req.query
+		const users = {
+            'data': [],
+            'status': 0
+        };
         try{
-			const users = await UserModel.find({}, '-_id');
+			const options = util.parseQueryOptions(query);
+			var m_query = null;
+            if(query.q){
+                const reg = new RegExp(query.q);
+                m_query = UserModel.find({$text:{$search: reg}},{score: {$meta: "textScore"}})
+                .sort({score:{$meta: "textScore"}})
+            }else{
+                m_query =  UserModel.find({}, {'page_id': 0});
+            }
+            
+            users['total'] = await m_query.countDocuments();
+            users['data'] = await m_query.find().skip(options.skip).limit(options.limit);
+
 			res.send(users);
 		}catch(err){
-			console.log('获取用户失败');
+			console.log(err);
 			res.send({
 				status: 0,
 				type: 'ERROR_DATA',

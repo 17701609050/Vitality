@@ -152,12 +152,12 @@ a {
 	position: relative;
 }
 
-#tags{
+/* .tags{
 	width: 100%;
 	background-color: #fff;
 	padding: 0.3em 1em 0.5em 0.5em;
-	/*text-align: center;*/
-}
+
+} */
 
 #tags h3{
 	text-align: left;
@@ -168,13 +168,16 @@ a {
 
 }
 
-#tags h5 span{
-	font-weight: normal;
-	font-size: 0.625rem;
-	font-size: 12px;
-	line-height: 2.5em;
-	margin-left: 0.5em;
-
+.tags .tags-body a {
+    font-size: 12px !important;
+    color: #555;
+    margin-right: 10px;
+    background: #ccc;
+    display: inline-block;
+    float: left;
+    padding: 4px 8px;
+    margin-bottom: 15px;
+    border-radius: 2px;
 }
 
 #friends{
@@ -650,4 +653,32 @@ img{
     color: #fff;
     background-color: #0366d6;
     border-color: #0366d6;
+}
+
+#footer {
+    margin-top: 40px;
+    min-width: 100%;
+    float: left;
+    background: #3C3C3C;
+}
+#footer .footer-c {
+    width: 1190px;
+    margin: 0 auto;
+}
+#footer .footer-c ul {
+    width: 1190px;
+    text-align: center;
+    float: left;
+    margin: 0 auto;
+    /* background: blue; */
+}
+#footer .footer-c ul li {
+    display: inline-block;
+    margin: 20px;
+}
+#footer .footer-c p {
+    font-size: 12px;
+    color: #C2C2C2;
+    text-align: center;
+    padding-bottom: 20px;
 }

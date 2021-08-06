@@ -37,9 +37,15 @@ const routers = [
       {
         path: 'movie/update/:id',
         name: 'movie/update',
-        meta: {module: "/movie", group: "movie", title: '更新电影'},
+        meta: {edit: true, module: "/movie", group: "movie", title: '更新电影'},
         component: (resolve) => require(['../views/movie/UpdateMovie.vue'], resolve),
-      }
+      },
+      {
+        path: 'users',
+        name: 'users',
+        meta: {module: "/users", group: "user", title: '用户 - 列表'},
+        component: (resolve) => require(['../views/user/user.vue'], resolve),
+      },
     ]
   }
   

@@ -18,6 +18,13 @@ import 'mavon-editor/dist/css/index.css'
 
 Vue.config.productionTip = false
 
+
+// 解决ElementUI导航栏中的vue-router在3.0版本以上重复点菜单报错问题
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(iView)
@@ -56,6 +63,9 @@ router.beforeEach(async (to, from, next) => {
       store.dispatch('admin/auth').then(x => {
         if(x.data.status==0){
           Vue.prototype.$Message.error(x.data.error || '未授权')
+          setTimeout(() => {
+            next('/login')
+          }, 1500);
         }else if(x.data){
           next()
         }

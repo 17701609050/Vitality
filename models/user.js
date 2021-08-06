@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
         required: true 
     },
     email: {type: String},
-    last_login: {type: Date, default: '' },
+    last_login: {type: String, default: '' },
     password: {
       type: String,
       required: true,
@@ -16,13 +16,7 @@ const userSchema = new mongoose.Schema({
     },
     is_active: {type: Number, default: 0},	// 0: not active  1: active
     is_super_user: {type: Number, default: 0}, // 0: not admin  1: admin
-    created_at: {
-        type: Date,
-        allowNull: false,
-        get() {
-          return moment(this.getDataValue('created_at')).format('YYYY-MM-DD');
-        }
-    },
+    joined_date:  {type: String, default: ''},
     updated_time:  {
         type: Date,
         get() {

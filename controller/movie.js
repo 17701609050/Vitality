@@ -21,7 +21,14 @@ class Movie {
                 m_query = MovieModel.find({$text:{$search: reg}},{score: {$meta: "textScore"}})
                 .sort({score:{$meta: "textScore"}})
             }else{
-                m_query =  MovieModel.find({}, {'page_id': 0});
+                let filters = {}
+                if (query.style){
+                    filters =  {
+                        $or: [{style:{$regex: query.style}}]
+                    };
+                }
+                m_query =  MovieModel.find(filters, {'page_id': 0});
+                
             }
             
             movies['total'] = await m_query.countDocuments();

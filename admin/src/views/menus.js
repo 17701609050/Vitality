@@ -14,7 +14,7 @@ const menus = [
 
     {
         name: "电影",
-        path: "set",
+        path: "movie",
         icon: "ios-film",
         children: [
             {
@@ -67,19 +67,19 @@ const menus = [
     },
 
     {
-        name: "广告管理",
-        path: "advertise",
-        icon: "ios-disc",
+        name: "用户管理",
+        path: "user",
+        icon: "md-person",
         children: [
             {
-                name: "广告列表",
-                path: "/advertise",
-                icon: "md-list"
+                name: "用户列表",
+                path: "/users",
+                icon: "md-people"
             },
             {
-                name: "广告创建",
-                path: "/advertise/create",
-                icon: "md-add-circle"
+                name: "用户创建",
+                path: "/user/create",
+                icon: "md-person-add"
             }
         ]
     },

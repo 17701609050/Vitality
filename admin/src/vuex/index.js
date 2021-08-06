@@ -9,6 +9,7 @@ import * as types from './mutation-types'
 import article from './modules/article'
 import movie from './modules/movie'
 import admin from './modules/admin'
+import user from './modules/user'
 // import advertise from './modules/advertise'
 
 Vue.use(Vuex);
@@ -55,6 +56,7 @@ export default new Vuex.Store({
   modules: {
     article,
     movie,
-    admin
+    admin,
+    user
   }
 });

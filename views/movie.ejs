@@ -9,7 +9,7 @@
 <link href="/stylesheets/pagination.css" rel="stylesheet">
 <div class="container">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
             <div class="movieList">
                 <nav class="navbar" role="navigation" id="navibar">
                     <ul class="nav navbar-nav">
@@ -28,7 +28,7 @@
                                     <div class="thumbnail movieList_con_cell_info">
                                         <div class="post-thumbnail">
                                             <a href="/movie/subject/<%= movie._id %>/" class="inimg" target="_blank" title="<%= movie.chinese_movie_name %>">
-                                                <!-- <img src="<%= movie.imgs[0] %>" alt="<%= movie.chinese_movie_name %>"/> -->
+                                                <img src="<%= movie.imgs[0] %>" alt="<%= movie.chinese_movie_name %>"/>
                                             </a>
                                         </div>
                                         <a href="/movie/subject/<%= movie._id %>/"><%= movie.movie %></a>
@@ -44,32 +44,61 @@
             <div id="pages"></div>
         </div>
 
-        <div class="col-md-3">
-            <!--AD-->
-            <div class="sidebar-block">
-                <h3 class="catListTitle"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;广告</h3>
-                <div style="text-align: center">
-                <a target="_blank" href="https://s.click.taobao.com/t?e=m%3D2%26s%3DnkjZtVRtPoccQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAocJNa4OyAN2jiRkxbhwQNzWePgha7T0wH9EPFfAXnEZv92usfM45oXWSw9%2FuI4tg5OrPSpwgNex52fUFuCXFljFSHLx7GXNykAUQdVyQjtv3eyuD8v94PeR5QSegoQsOVZh60yJlmBX5LHo6sqpqDKSXMV4ozPsJz8Zo%2FjHDXX%2BLNmFwzcjFAU%3D">
-                    <img style="height: 100%;width: 100%;" src="/images/aliyun_463x224.jpg">
-                </a>
-                </div>
-            </div>
-            <!--AD-->
+        <div class="col-md-4" style="margin-top: 20px;">
             
-            <%- include('components/statement', {})%>
-            <div class="sidebar-block">
-                <h3 class="catListTitle"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;关注我们</h3>
-                <div>
-                    <%- include('components/footer', {})%>
+            <div class="panel panel-default">
+                <div class="panel-heading">最新更新</div>
+                <div class="panel-body">
+                  Panel content
                 </div>
             </div>
+              
+            <div class="panel panel-default tags">
+                <div class="panel-heading">
+                  <h3 class="panel-title">热门标签</h3>
+                </div>
+                <div class="panel-body tags-body">
+                    <a href="/movies?style=剧情">剧情</a>
+                    <a href="/movies?style=犯罪"">犯罪</a>
+                    <a href="/movies?style=悬疑">悬疑</a>
+                    <a href="/movies?style=动作">动作</a>
+                    <a href="/movies?style=喜剧">喜剧</a>
+                    <a href="/movies?style=冒险">冒险</a>
+                    <a href="/movies?style=灾难">灾难</a>
+                    <a href="/movies?style=爱情">爱情</a>
+                    <a href="/movies?style=科幻">科幻</a>
+                    <a href="/movies?style=恐怖">恐怖</a>
+                    <a href="/movies?style=惊悚">惊悚</a>
+                    <a href="/movies?style=战争">战争</a>
+                    <a href="/movies?style=奇幻">奇幻</a>
+                </div>
+            </div>
+            
+
+            <!--广告-->
+            <%- include('components/ad', {})%>
+            
+            <!--广告-->
+
+            <!--声明-->
+            <%- include('components/statement', {})%>
+            <!--声明-->
+
+            <!--关于-->
+            <%- include('components/about', {})%>
+            <!--关于-->
+            
         </div>
+        
     </div>
+    
 </div>
+
 <input type="hidden" id="total" value="<%= movies.total %>" />
 <input type="hidden" id="currentPage" value="<%= currentPage %>" />
 <input type="hidden" id="pageSize" value="<%= pageSize %>" />
 <input type="hidden" id="q" value="<%= q %>" />
+<%- include('components/footer', {})%>
 <script src="/javascripts/pagination.js"></script>
 <script>
     new Pagination({
