@@ -17,9 +17,12 @@ class Movie {
             const options = util.parseQueryOptions(query);
             var m_query = null;
             if(query.q){
-                const reg = new RegExp(query.q);
-                m_query = MovieModel.find({$text:{$search: reg}},{score: {$meta: "textScore"}})
-                .sort({score:{$meta: "textScore"}})
+                const keyword = query.q;
+                const orOptions = [{'chinese_movie_name': {$regex: keyword}}, {'translation_name': {$regex: keyword}}, 
+                {'moviename': {$regex: keyword}}, {'style': {$regex: keyword}}, {'director': {$regex: keyword}}, 
+                {'actor': {$regex: keyword}}, {'aboutmovie': {$regex: keyword}}
+            ]
+                m_query = MovieModel.find({$or: orOptions})
             }else{
                 let filters = {}
                 if (query.style){
@@ -30,7 +33,12 @@ class Movie {
                 m_query =  MovieModel.find(filters, {'page_id': 0});
                 
             }
-            
+            if(query.doubanscore=='over8'){
+                m_query = m_query.find({'doubanscore':{'$gte': '8'}}).sort({doubanscore: 'desc'})
+            }
+            if(query.imdbscore=='over8'){
+                m_query = m_query.find({'imdbscore':{'$gte': '8'}}).sort({imdbscore: 'desc'})
+            }
             movies['total'] = await m_query.countDocuments();
             movies['data'] = await m_query.find().skip(options.skip).limit(options.limit);
             for (var i=0; i<movies['data'].length; i++) {

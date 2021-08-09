@@ -2,7 +2,7 @@
     'components/header', {
     title: '',
     description: '',
-    keyword: '',
+    q: q,
 
     })
 %>
@@ -44,7 +44,7 @@
                         <a href="" class="tag_link"><%= movie.style %></a>
                     </h5>
                     <div>
-                        <img width="600px" src="<%= movie.imgs[0] %>">
+                        <!-- <img width="600px" src="<%= movie.imgs[0] %>"> -->
                     </div>
                     <br/>
     
@@ -83,19 +83,28 @@
                   <h3 class="panel-title">热门标签</h3>
                 </div>
                 <div class="panel-body tags-body">
-                    <a href="">剧情</a>
-                    <a href="">犯罪</a>
-                    <a href="">悬疑</a>
-                    <a href="">动作</a>
-                    <a href="">喜剧</a>
-                    <a href="">冒险</a>
-                    <a href="">灾难</a>
-                    <a href="">爱情</a>
-                    <a href="">科幻</a>
-                    <a href="">恐怖</a>
-                    <a href="">惊悚</a>
-                    <a href="">战争</a>
-                    <a href="">奇幻</a>
+                    <a href="/movies?style=剧情">剧情</a>
+                    <a href="/movies?style=犯罪">犯罪</a>
+                    <a href="/movies?style=悬疑">悬疑</a>
+                    <a href="/movies?style=动作">动作</a>
+                    <a href="/movies?style=武侠">武侠</a>
+                    <a href="/movies?style=喜剧">喜剧</a>
+                    <a href="/movies?style=冒险">冒险</a>
+                    <a href="/movies?style=灾难">灾难</a>
+                    <a href="/movies?style=爱情">爱情</a>
+                    <a href="/movies?style=科幻">科幻</a>
+                    <a href="/movies?style=恐怖">恐怖</a>
+                    <a href="/movies?style=惊悚">惊悚</a>
+                    <a href="/movies?style=战争">战争</a>
+                    <a href="/movies?style=奇幻">奇幻</a>
+                    <a href="/movies?style=儿童">儿童</a>
+                    <a href="/movies?style=动画">动画</a>
+                    <a href="/movies?style=家庭">家庭</a>
+                    <a href="/movies?style=传记">传记</a>
+                    <a href="/movies?style=歌舞">歌舞</a>
+                    <a href="/movies?style=音乐">音乐</a>
+                    <a href="/movies?style=西部">西部</a>
+                    <a href="/movies?style=运动">运动</a>
                 </div>
             </div>  
             <!--广告-->

@@ -173,7 +173,7 @@ a {
     color: #555;
     margin-right: 10px;
     background: #ccc;
-    display: inline-block;
+    display: block;
     float: left;
     padding: 4px 8px;
     margin-bottom: 15px;

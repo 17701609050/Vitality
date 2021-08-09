@@ -11,40 +11,61 @@ import formidable from 'formidable'
 import moment from 'moment';
 
 class User {
-    async register(req, res, next){
-		const data = req.body;
-		
-		//生成salt的迭代次数
-		const saltRounds = 10;
-		//随机生成salt
-		const salt = bcrypt.genSaltSync(saltRounds);
-		//获取hash值
-		var hash = bcrypt.hashSync(data.password, salt);
-		const userObj = {
-			name: data.name,
-			email: data.email,
-			password: hash,
-			intruduce: data.intruduce,
-			joined_date: datetime.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+    async register(data){
+		var result = {
+			'status': 0,
+			'error': '',
+			'user': {}
 		}
 		try{
-			const newUser = await UserModel.create(userObj);
-			console.log(newUser);
-			if(newUser){
-				res.send({
-					status: 1,
-					success: '添加成功',
-				})
+			var username = data.name;
+			var password = data.password;
+			var repassword = data.repassword;
+			if(!username){
+				result.error = '用户名不能为空'
+				
 			}
-			
+			if(!password || !repassword){
+				result.error = '密码不能为空'
+				
+			}
+			if(password!=repassword){
+				result.error = '两次输入的密码不一致'
+				
+			}
+			const hasUser = await UserModel.findOne({name: username});
+			console.log(hasUser)
+			// 如果存在，抛出存在信息
+            if (hasUser) {
+				result.error = '用户已存在'
+				
+            }else{
+				//生成salt的迭代次数
+				const saltRounds = 10;
+				//随机生成salt
+				const salt = bcrypt.genSaltSync(saltRounds);
+				//获取hash值
+				var hash = bcrypt.hashSync(data.password, salt);
+				const userObj = {
+					name: username,
+					email: data.email,
+					password: hash,
+					intruduce: data.intruduce,
+					joined_date: datetime.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+				}
+				
+				const newUser = await UserModel.create(userObj);
+				if(newUser){
+					result.status = 1
+					result.user = newUser
+				}
+			}
 		}catch(err){
 			console.log(err);
-			res.send({
-				status: 0,
-				type: 'ERROR_IN_SAVE_DATA',
-				message: '保存数据失败 '+ err,
-			})
-		}    
+			result.error = err
+		}
+		console.log(result)
+		return result
 	};
 	async login(req, res, next){
 		const data = req.body;

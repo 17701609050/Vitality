@@ -2,7 +2,7 @@
     'components/header', {
     title: '',
     description: '',
-    keyword: '',
+    q: q,
 
     })
 %>
@@ -13,9 +13,9 @@
             <div class="movieList">
                 <nav class="navbar" role="navigation" id="navibar">
                     <ul class="nav navbar-nav">
-                        <li><a href="/movies" class="currentmovietype">最新</a></li>
-                        <li><a href="/movies/douban" class="currentmovietype">豆瓣高分</a></li>
-                        <li><a href="{% url 'movie_list_imdb' %}" class="currentmovietype">IMDB高分</a></li>
+                        <li><a href="/movies" class="active">最新</a></li>
+                        <li><a href="/movies?doubanscore=over8" class="currentmovietype">豆瓣8分以上</a></li>
+                        <li><a href="/movies?imdbscore=over8" class="currentmovietype">IMDB高分</a></li>
                     </ul>
                 </nav>
                 <div>
@@ -28,7 +28,7 @@
                                     <div class="thumbnail movieList_con_cell_info">
                                         <div class="post-thumbnail">
                                             <a href="/movie/subject/<%= movie._id %>/" class="inimg" target="_blank" title="<%= movie.chinese_movie_name %>">
-                                                <img src="<%= movie.imgs[0] %>" alt="<%= movie.chinese_movie_name %>"/>
+                                                <!-- <img src="<%= movie.imgs[0] %>" alt="<%= movie.chinese_movie_name %>"/> -->
                                             </a>
                                         </div>
                                         <a href="/movie/subject/<%= movie._id %>/"><%= movie.movie %></a>
@@ -59,9 +59,10 @@
                 </div>
                 <div class="panel-body tags-body">
                     <a href="/movies?style=剧情">剧情</a>
-                    <a href="/movies?style=犯罪"">犯罪</a>
+                    <a href="/movies?style=犯罪">犯罪</a>
                     <a href="/movies?style=悬疑">悬疑</a>
                     <a href="/movies?style=动作">动作</a>
+                    <a href="/movies?style=武侠">武侠</a>
                     <a href="/movies?style=喜剧">喜剧</a>
                     <a href="/movies?style=冒险">冒险</a>
                     <a href="/movies?style=灾难">灾难</a>
@@ -71,6 +72,14 @@
                     <a href="/movies?style=惊悚">惊悚</a>
                     <a href="/movies?style=战争">战争</a>
                     <a href="/movies?style=奇幻">奇幻</a>
+                    <a href="/movies?style=儿童">儿童</a>
+                    <a href="/movies?style=动画">动画</a>
+                    <a href="/movies?style=家庭">家庭</a>
+                    <a href="/movies?style=传记">传记</a>
+                    <a href="/movies?style=歌舞">歌舞</a>
+                    <a href="/movies?style=音乐">音乐</a>
+                    <a href="/movies?style=西部">西部</a>
+                    <a href="/movies?style=运动">运动</a>
                 </div>
             </div>
             
@@ -98,6 +107,9 @@
 <input type="hidden" id="currentPage" value="<%= currentPage %>" />
 <input type="hidden" id="pageSize" value="<%= pageSize %>" />
 <input type="hidden" id="q" value="<%= q %>" />
+<input type="hidden" id="douban" value="<%= doubanscore %>" />
+<input type="hidden" id="imdb" value="<%= imdbscore %>" />
+<input type="hidden" id="style" value="<%= style %>" />
 <%- include('components/footer', {})%>
 <script src="/javascripts/pagination.js"></script>
 <script>
@@ -117,7 +129,20 @@
         disabled: true, // 显示禁用手势 默认false  [非必填]
         currentChange: function(index, pageSize) { // 页码改变时回调  TODO:第一个参数是当前页码，第二个参数是每页显示条数数量，需使用sizes第二参数才有值。
             // console.log(index, pageSize);
-            location.href = '/movies?page='+index+'&limit='+pageSize+'&q='+$("#q").val();
+            var url = '/movies?page='+index+'&limit='+pageSize
+            if($("#q").val()){
+                url += '&q='+$("#q").val();
+            }
+            if($("#style").val()){
+                url += '&style='+$("#style").val();
+            }
+            if($("#douban").val()){
+                url += '&doubanscore='+$("#douban").val();
+            }
+            if($("#imdb").val()){
+                url += '&imdbscore='+$("#imdb").val();
+            }
+            location.href = url
         }
     });
 </script>
