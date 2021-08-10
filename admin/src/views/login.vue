@@ -87,7 +87,7 @@
               this.$Message.success("登录成功！");
               window.location.href = '/'
             }else{
-              this.$Message.error(ret.data.message);
+              this.$Message.error(ret.data.error);
               this.buttonLoading = false;
             }
             

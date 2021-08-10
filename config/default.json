@@ -7,8 +7,8 @@
 		"secret": "SID",
 		"cookie": {
 			"httpOnly": true,
-	    "secure": false,
-	    "maxAge": 3652460601000
+	    	"secure": false,
+	    	"maxAge": 3652460601000
 		}
 	},
 	"security": {

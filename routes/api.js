@@ -11,7 +11,10 @@ router.get('/category', Category.getCategory);
 
 /* user manager */
 router.post('/user', User.register);
-router.post('/user/login', User.login);
+router.post('/user/login', async function(req, res, next) {
+  var result = await User.login(req.body)
+  res.send(result);
+});
 router.get('/user/auth', User.auth);
 router.get('/users', User.getUsers);
 

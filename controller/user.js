@@ -15,7 +15,8 @@ class User {
 		var result = {
 			'status': 0,
 			'error': '',
-			'user': {}
+			'user': {},
+			'form': data
 		}
 		try{
 			var username = data.name;
@@ -37,8 +38,7 @@ class User {
 			console.log(hasUser)
 			// 如果存在，抛出存在信息
             if (hasUser) {
-				result.error = '用户已存在'
-				
+				result.error = '用户已存在'			
             }else{
 				//生成salt的迭代次数
 				const saltRounds = 10;
@@ -64,36 +64,31 @@ class User {
 			console.log(err);
 			result.error = err
 		}
-		console.log(result)
 		return result
 	};
-	async login(req, res, next){
-		const data = req.body;
+	async login(data){
+		var result  = {
+			'status': 0,
+			'error': '',
+			'token': '',
+			'form': data
+		}
 		const admin = await UserModel.findOne({name: data.username})
 		if (!admin) {
-			res.send({
-				status: 0,
-				type: 'ERROR_IN_AUTH_DATA',
-				message: '账号不存在 ',
-			});
+			result.error = '账号不存在 '
 		}else{
-			const correct = bcrypt.compareSync(req.body.password, admin.password);
+			const correct = bcrypt.compareSync(data.password, admin.password);
 			if (!correct) {
-				res.send({
-					status: 0,
-					type: 'ERROR_IN_AUTH_DATA',
-					message: '密码不正确 ',
-				})
+				result.error = '密码不正确 '
 			}else{
 				admin.last_login = datetime.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
 				admin.save()
 				const token = util.generateToken(admin.id, 16)
-				res.send({
-					status: 1,
-					token: token
-				})
+				result.status = 1
+				result.token = token
 			}
 		}
+		return result
 	};
 	async auth(req, res, next){
 		const Credentials = basicAuth(req);

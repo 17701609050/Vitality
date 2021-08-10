@@ -10,21 +10,31 @@ router.get('/register', async function(req, res, next) {
 router.post('/register',  async function(req, res, next) {
     
     var result = await User.register(req.body)
-    if(result.status==1){
-        // 注册成功跳转登录
-        res.redirect('/login');
-    }else{
-        res.render('register', result);
-    }
-    
+    res.render('register', result);
 });
 
 router.get('/login', async function(req, res, next) {
     res.render('login', {});
 });
+router.get('/logout', function (req, res, next) {
+    req.session.destroy(); // 删除session
+    res.redirect('login');
+});
+
+router.post('/login', async function(req, res, next) {
+    var result = await User.login(req.body)
+    if(result.status==1){
+        req.session.username = req.body.username;
+        res.locals.isLogin = true;
+        res.redirect('/movies');
+    }else{
+        res.render('login', result);
+    }
+});
 
 router.get('/movies', async function(req, res, next) {
     const movies = await Movie.getMovies(req.query);
+    console.log(req.session)
     res.render('movie', {
         'movies': movies, 
         'currentPage': req.query.page, 
@@ -33,12 +43,13 @@ router.get('/movies', async function(req, res, next) {
         'style': req.query.style,
         'doubanscore': req.query.doubanscore,
         'imdbscore': req.query.imdbscore,
+        'session': req.session
     });
 });
 
 router.get('/movie/subject/:mid', async function(req, res, next) {
     const movie = await Movie.getOneMovie(req.params.mid);
-    res.render('movieSubject', {'movie': movie, 'q': req.query.q});
+    res.render('movieSubject', {'movie': movie, 'q': req.query.q, 'session': req.session});
 });
 
 module.exports = router;

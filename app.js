@@ -28,18 +28,20 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// const MongoStore = connectMongo(session);
+
+// session设置
+var MongoStore = connectMongo(session);
 app.use(cookieParser());
-// app.use(session({
-//   name: conf.session.name,
-// 	secret: conf.session.secret,
-// 	resave: true,
-// 	saveUninitialized: false,
-// 	cookie: conf.session.cookie,
-// 	store: new MongoStore({
-//   	url: conf.url
-// 	})
-// }))
+app.use(session({
+  name: config.session.name,
+	secret: config.session.secret,
+	resave: true,
+	saveUninitialized: false,
+	cookie: config.session.cookie,
+	store: new MongoStore({
+  	url: config.url
+	})
+}))
 
 //设置跨域访问
 app.all('*', function(req, res, next) {
