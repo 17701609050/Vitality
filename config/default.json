@@ -4,12 +4,7 @@
 	"url": "mongodb://127.0.0.1:27017/imovie",
 	"session": {
 		"name": "SID",
-		"secret": "SID",
-		"cookie": {
-			"httpOnly": true,
-	    	"secure": false,
-	    	"maxAge": 3652460601000
-		}
+		"secret": "SID"
 	},
 	"security": {
 		"secretKey": "secretKey",

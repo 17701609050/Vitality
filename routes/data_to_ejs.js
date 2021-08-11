@@ -32,9 +32,8 @@ router.post('/login', async function(req, res, next) {
     }
 });
 
-router.get('/movies', async function(req, res, next) {
+router.get('/', async function(req, res, next) {
     const movies = await Movie.getMovies(req.query);
-    console.log(req.session)
     res.render('movie', {
         'movies': movies, 
         'currentPage': req.query.page, 
@@ -43,13 +42,25 @@ router.get('/movies', async function(req, res, next) {
         'style': req.query.style,
         'doubanscore': req.query.doubanscore,
         'imdbscore': req.query.imdbscore,
-        'session': req.session
+    });
+});
+
+router.get('/movies', async function(req, res, next) {
+    const movies = await Movie.getMovies(req.query);
+    res.render('movie', {
+        'movies': movies, 
+        'currentPage': req.query.page, 
+        'pageSize': req.query.limit,
+        'q': req.query.q,
+        'style': req.query.style,
+        'doubanscore': req.query.doubanscore,
+        'imdbscore': req.query.imdbscore,
     });
 });
 
 router.get('/movie/subject/:mid', async function(req, res, next) {
     const movie = await Movie.getOneMovie(req.params.mid);
-    res.render('movieSubject', {'movie': movie, 'q': req.query.q, 'session': req.session});
+    res.render('movieSubject', {'movie': movie, 'q': req.query.q});
 });
 
 module.exports = router;

@@ -35,20 +35,26 @@ app.use(cookieParser());
 app.use(session({
   name: config.session.name,
 	secret: config.session.secret,
-	resave: true,
-	saveUninitialized: false,
-	cookie: config.session.cookie,
+	resave: false,
+	saveUninitialized: false, //强制将未初始化的 session 存储, 默认值是true
+	cookie: {
+    "httpOnly": true,
+    "secure": false,
+    "maxAge": 1000*60*60*24*30  //过期时间一个月
+  },
+  rolling: true, //在每次请求时强行设置 cookie，重置 cookie 过期时间（默认：false)
 	store: new MongoStore({
-  	url: config.url
+  	url: config.url,
+    // touchAfter: 24 * 3600 // 设置在24小时内只更新一次会话，不管有多少请求(除了在会话数据上更改某些内容的除外)
 	})
 }))
 
-//设置跨域访问
+//中间件， 设置跨域访问和全局变量
 app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-
+  res.locals.username = req.session.username;
   next();
 });
 
